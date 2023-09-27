@@ -177,4 +177,14 @@ WHERE CD.continent is NOT NULL
 Select *
 FROM PPV
 
+--GDR = Global Death Ratio
+Create View GDR as
+Select continent, MAX(total_deaths) as MaxdeathCount, MAX((total_deaths / population))*100 as DeathRate
+FROM PortfolioProject..CovidDeaths
+--WHERE location = 'India'
+WHERE continent is not null
+Group By continent
+--Order by MaxDeathCount DESC
+
+
 
