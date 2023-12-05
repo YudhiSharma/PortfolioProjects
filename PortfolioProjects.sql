@@ -36,6 +36,27 @@ Group By location, population
 Order by InfectionRate DESC
 -- India ranks at 177 with an infection rate of 3.2% as of 2023.
 
+Select continent, MAX(total_deaths) as DeathCount
+FROM PortfolioProject..CovidDeaths
+--WHERE location = 'India'
+WHERE continent is not null
+Group By continent
+Order by DeathCount DESC
+
+Select Location, population, date, MAX(total_cases) as MaxCasesCount, MAX((total_cases / population))*100 as InfectionRate
+FROM PortfolioProject..CovidDeaths
+--WHERE location = 'India'
+WHERE continent is not null
+Group By Location, population , date
+Order by InfectionRate DESC
+
+Select Location, population, MAX(total_cases) as MaxCasesCount, MAX((total_cases / population))*100 as InfectionRate
+FROM PortfolioProject..CovidDeaths
+--WHERE location = 'India'
+WHERE continent is not null
+Group By Location, population 
+Order by MaxCasesCount DESC
+
 --Continent infection rate w.r.t population
 Select continent, MAX(total_cases) as MaxCasesCount, MAX((total_cases / population))*100 as InfectionRate
 FROM PortfolioProject..CovidDeaths
@@ -176,15 +197,5 @@ WHERE CD.continent is NOT NULL
 
 Select *
 FROM PPV
-
---GDR = Global Death Ratio
-Create View GDR as
-Select continent, MAX(total_deaths) as MaxdeathCount, MAX((total_deaths / population))*100 as DeathRate
-FROM PortfolioProject..CovidDeaths
---WHERE location = 'India'
-WHERE continent is not null
-Group By continent
---Order by MaxDeathCount DESC
-
 
 
